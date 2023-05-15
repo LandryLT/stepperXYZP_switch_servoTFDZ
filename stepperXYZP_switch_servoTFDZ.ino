@@ -1,6 +1,7 @@
 #include "stepperXYZP.h"
 #include "servoTFDZ.h"
 
+//Activate global debugging
 serialDebugger globalDebug(true);
 
 //Other Inputs
