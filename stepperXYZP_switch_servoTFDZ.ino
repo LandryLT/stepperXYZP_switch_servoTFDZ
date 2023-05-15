@@ -30,11 +30,13 @@ MyServo servoD(srvD, 11, 16);
 MyServo servoZ(srvZ, 12, 17);
 MyServo servos[NUM_OF_SERVOS] = {servoT, servoF, servoD, servoZ};
 
-//Gates and timer 
+//Gates, timers, indices...
 bool stepperGate = false;
 bool servoGate = false;
 unsigned long miscTimer = 0;
 int stepDelay = 0;
+int orchestratorIndex = 0;
+int maxNumMotors = max(NUM_OF_STEPPERS, NUM_OF_SERVOS); 
 
 void setup() {
   //Stepper pins
@@ -55,6 +57,14 @@ void setup() {
 
 
 void loop() {
+  //Comment/Uncomment prefered loop:
+  //--------------------------------
+  loopInOrder();
+  //loopInTurn();
+}
+
+// Misc -> all steppers -> all servos
+void loopInOrder(){
   //Only read every x ms
   unsigned int now = millis();
   if (now - miscTimer > MISC_INPUTS_REFRESH_MS){
@@ -78,4 +88,31 @@ void loop() {
       servos[i].run();
     }
 	}
+}
+
+// one stepper -> one servo -> misc 
+void loopInTurn(){
+  //Read all misc, only every x ms (can probably be even more optimised)
+  if (orchestratorIndex == maxNumMotors){
+    unsigned int now = millis();
+    if (now - miscTimer > MISC_INPUTS_REFRESH_MS){
+      stepperGate = digitalRead(switchAup);
+      servoGate = digitalRead(switchAdown);
+      stepDelay = map(analogRead(stepperSpeedPot), 0, 1023, 0, 1000);
+      miscTimer = now;
+    }
+  } else {
+    //Read and run one stepper motor
+    if (stepperGate && orchestratorIndex < NUM_OF_STEPPERS){
+      steppers[orchestratorIndex].read(MISC_INPUTS_REFRESH_MS);
+      steppers[orchestratorIndex].run(stepDelay);
+    }
+    //Read and run one servo motor
+    if (servoGate && orchestratorIndex < NUM_OF_SERVOS){
+      servos[orchestratorIndex].read(MISC_INPUTS_REFRESH_MS);
+      servos[orchestratorIndex].run();
+    }
+  }
+  //change orchestrator index for next iteration of loop
+  orchestratorIndex = (orchestratorIndex + 1) % (maxNumMotors + 1);
 }

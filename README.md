@@ -3,7 +3,10 @@
 **stepperXYZP_switch_servoTFDZ** is an Arduino project to control multiple stepper and servo motors.
 
 ---
-
+## main loops
+- ```loopInOrder()``` reads on all misc inputs, then takes care of all stepper motors and ends with all servo motors per cycle. All methods are non blocking so, in practice, every task will be done if due time is expired with respects to the order mentionned above.
+- ```loopInTurn()``` takes care of a single stepper, then a single servo and ends with reading all misc inputs per cycle. All methods are non blocking so, in practice, every task will be done if due time is expired with respects to the order mentionned above.
+---
 ## servoTFDZ 
 
 **MyServo** is a class to control a servo motor's rotation speed.
