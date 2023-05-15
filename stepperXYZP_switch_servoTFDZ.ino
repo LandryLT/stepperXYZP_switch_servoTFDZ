@@ -92,6 +92,7 @@ void loopInOrder(){
 
     
     //DEBUG-------------------------------------------------------------------
+    globalDebug.serialPrint("MISC INPUTS", "  ------------------------------");
     globalDebug.serialPrint("STEPPER GATE ", String(stepperGate), false);
     globalDebug.serialPrint("SERVO GATE ", String(servoGate), false);
     globalDebug.serialPrint("STEPDELAY ", String(stepDelay));
@@ -102,7 +103,7 @@ void loopInOrder(){
   if(stepperGate){  
     for (int i = 0; i < NUM_OF_STEPPERS; i++){
       //DEBUG-------------------------------------------------------------------
-      steppers[i].debugger.serialPrint("STEPPER #", String(i));
+      steppers[i].debugger.serialPrint("STEPPER #", String(i) +"  ------------------------------");
       //DEBUG-------------------------------------------------------------------
       steppers[i].read(STEPPER_REFRESH_MS);
       steppers[i].run(stepDelay);
@@ -112,7 +113,7 @@ void loopInOrder(){
 	if(servoGate){
     for (int i = 0; i < NUM_OF_SERVOS; i++){
       //DEBUG-------------------------------------------------------------------
-      steppers[i].debugger.serialPrint("SERVO #", String(i));
+      steppers[i].debugger.serialPrint("SERVO #", String(i)+"  ------------------------------");
       //DEBUG-------------------------------------------------------------------
       servos[i].read(SERVO_REFRESH_MS);
       servos[i].run();
@@ -132,6 +133,7 @@ void loopInTurn(){
       miscTimer = now;
       
       //DEBUG-------------------------------------------------------------------
+      globalDebug.serialPrint("MISC INPUTS", "  ------------------------------");
       globalDebug.serialPrint("STEPPER GATE ", String(stepperGate), false);
       globalDebug.serialPrint("SERVO GATE ", String(servoGate), false);
       globalDebug.serialPrint("STEPDELAY ", String(stepDelay));
@@ -141,7 +143,7 @@ void loopInTurn(){
     //Read and run one stepper motor
     if (stepperGate && orchestratorIndex < NUM_OF_STEPPERS){
       //DEBUG-------------------------------------------------------------------
-      steppers[orchestratorIndex].debugger.serialPrint("STEPPER #", String(orchestratorIndex));
+      steppers[orchestratorIndex].debugger.serialPrint("STEPPER #", String(orchestratorIndex)+"  ------------------------------");
       //DEBUG-------------------------------------------------------------------
       steppers[orchestratorIndex].read(STEPPER_REFRESH_MS);
       steppers[orchestratorIndex].run(stepDelay);
@@ -149,7 +151,7 @@ void loopInTurn(){
     //Read and run one servo motor
     if (servoGate && orchestratorIndex < NUM_OF_SERVOS){
       //DEBUG-------------------------------------------------------------------
-      servos[orchestratorIndex].debugger.serialPrint("SERVO #", String(orchestratorIndex));
+      servos[orchestratorIndex].debugger.serialPrint("SERVO #", String(orchestratorIndex)+"  ------------------------------");
       //DEBUG-------------------------------------------------------------------
       servos[orchestratorIndex].read(SERVO_REFRESH_MS);
       servos[orchestratorIndex].run();
