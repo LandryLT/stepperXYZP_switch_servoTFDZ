@@ -1,10 +1,10 @@
 #include "stepperXYZP.h"
 
 //My Stepper Constructor
-MyStepper::MyStepper(int switchUp, int switchDown, int dirPin, int stepPin) {
+MyStepper::MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin) {
   //Declare pins
-  _switchUp = switchUp;
-  _switchDown= switchDown;
+  _switchUpPin = switchUpPin;
+  _switchDownPin= switchDownPin;
   _dirPin = dirPin;
   _stepPin = stepPin;
 
@@ -21,15 +21,15 @@ MyStepper::MyStepper(int switchUp, int switchDown, int dirPin, int stepPin) {
 void MyStepper::pinInit() {
   pinMode(_dirPin, OUTPUT);
   pinMode(_stepPin, OUTPUT);
-  pinMode(_switchUp, INPUT_PULLUP);
-  pinMode(_switchDown, INPUT_PULLUP);
+  pinMode(_switchUpPin, INPUT_PULLUP);
+  pinMode(_switchDownPin, INPUT_PULLUP);
 }
 
 void MyStepper::read(int delay_ms) {
   unsigned long now = millis();
   if (now - _internalReadTimer > delay_ms){
-    _switchUpState = digitalRead(_switchUp);
-    _switchDownState = digitalRead(_switchDown);
+    _switchUpState = digitalRead(_switchUpPin);
+    _switchDownState = digitalRead(_switchDownPin);
   }
 }
 

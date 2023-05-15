@@ -37,7 +37,7 @@ class MyStepper
     public:
         /*Constructor: needs switch up and switch down input pins, as well as the stepper's direction and
         step output pins.*/
-        MyStepper(int switchUp, int switchDown, int dirPin, int stepPin);
+        MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin);
         //Initialise pins
         void pinInit();
         //Read switchs up and down

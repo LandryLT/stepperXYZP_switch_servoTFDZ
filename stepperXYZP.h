@@ -12,15 +12,15 @@ class MyStepper
     int _switchDownState;
     bool _lastDir;
     bool _lastState;
-    int _switchUp;
-    int _switchDown;
+    int _switchUpPin;
+    int _switchDownPin;
     int _dirPin;
     int _stepPin;
   public:
     void read(int delay_ms);
     void run(int stepdelay);
     void pinInit();
-    MyStepper(int switchUp, int switchDown, int dirPin, int stepPin);
+    MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin);
 };
 
 #endif
