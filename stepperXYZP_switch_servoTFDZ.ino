@@ -9,6 +9,7 @@ const int switchAdown = 41;
 
 //Steppers
 #define NUM_OF_STEPPERS 4
+#define STEPPER_REFRESH_MS 100
 //switchUp, switchDown, dirPin, stepPin
 MyStepper stepperX(45, 33, 5, 2);
 MyStepper stepperY(47, 35, 6, 3);
@@ -18,6 +19,7 @@ MyStepper steppers[NUM_OF_STEPPERS] = {stepperX, stepperY, stepperZ, stepperP};
 
 //Servos
 #define NUM_OF_SERVOS 4 
+#define SERVO_REFRESH_MS 70
 Servo srvT;
 Servo srvF;
 Servo srvD;
@@ -77,14 +79,14 @@ void loopInOrder(){
   //Run all steppers
   if(stepperGate){  
     for (int i = 0; i < NUM_OF_STEPPERS; i++){
-      steppers[i].read(MISC_INPUTS_REFRESH_MS);
+      steppers[i].read(STEPPER_REFRESH_MS);
       steppers[i].run(stepDelay);
     }
 	}
   //Run all servos
 	if(servoGate){
     for (int i = 0; i < NUM_OF_SERVOS; i++){
-      servos[i].read(MISC_INPUTS_REFRESH_MS);
+      servos[i].read(SERVO_REFRESH_MS);
       servos[i].run();
     }
 	}
@@ -104,12 +106,12 @@ void loopInTurn(){
   } else {
     //Read and run one stepper motor
     if (stepperGate && orchestratorIndex < NUM_OF_STEPPERS){
-      steppers[orchestratorIndex].read(MISC_INPUTS_REFRESH_MS);
+      steppers[orchestratorIndex].read(STEPPER_REFRESH_MS);
       steppers[orchestratorIndex].run(stepDelay);
     }
     //Read and run one servo motor
     if (servoGate && orchestratorIndex < NUM_OF_SERVOS){
-      servos[orchestratorIndex].read(MISC_INPUTS_REFRESH_MS);
+      servos[orchestratorIndex].read(SERVO_REFRESH_MS);
       servos[orchestratorIndex].run();
     }
   }
