@@ -44,7 +44,7 @@ int maxNumMotors = max(NUM_OF_STEPPERS, NUM_OF_SERVOS);
 
 void setup() {
   //Initiate debugger
-  globalDebug.init(9600);
+  globalDebug.serialInit(9600);
   //Turn all debuggers off if global debugger is not active
   if (!globalDebug.getActive()){
     for (int i = 0; i < NUM_OF_STEPPERS; i++){

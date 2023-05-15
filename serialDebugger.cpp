@@ -15,10 +15,15 @@ bool serialDebugger::getActive(){
 }
 
 //Init serial port
-void serialDebugger::init(int baudRate){
-    if (_active){
+void serialDebugger::serialInit(int baudRate){
+    //Only if active and not already open
+    if (_active && !Serial){
         Serial.begin(baudRate);
-        this->serialPrint("Serial began at baudRate:", String(baudRate));
+        while (!Serial)
+        {
+            delay(10);
+        }
+        serialPrint("Serial began at baudRate:", String(baudRate));
     }
 }
 
