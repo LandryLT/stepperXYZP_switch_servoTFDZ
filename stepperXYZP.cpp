@@ -23,8 +23,8 @@ MyStepper::MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin
 void MyStepper::pinInit() {
   pinMode(_dirPin, OUTPUT);
   pinMode(_stepPin, OUTPUT);
-  pinMode(_switchUpPin, INPUT);
-  pinMode(_switchDownPin, INPUT);
+  pinMode(_switchUpPin, INPUT_PULLUP);
+  pinMode(_switchDownPin, INPUT_PULLUP);
 
   //DEBUG-------------------------------------------------------------------
   debugger.serialPrint("STEP PIN INIT:\tdirPin:\t", String(_dirPin), false);
