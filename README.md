@@ -60,7 +60,9 @@ void MyStepper::run(int stepdelay) {
     unsigned long now = micros();
     //If either switch state is active
     if(_switchUpState || _switchDownState)  {
-    //Alternate stepper state if enough time has gone by
+        //If too many micros have gone by, set internal timer back to 0
+        if (_internalTimer > now)  {_internalTimer = 0;}
+        //Alternate stepper state if enough time has gone by
         if (now - _internalTimer >= stepdelay)  {
             digitalWrite(_stepPin, !_lastState);
             _lastState = !_lastState;
