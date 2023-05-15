@@ -8,8 +8,8 @@ class MyStepper
   private:
     unsigned long _internalTimer;
     unsigned long _internalReadTimer;
-    int _switchUpState;
-    int _switchDownState;
+    bool _switchUpState;
+    bool _switchDownState;
     bool _lastDir;
     bool _lastState;
     int _switchUpPin;

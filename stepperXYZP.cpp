@@ -34,6 +34,18 @@ void MyStepper::read(int delay_ms) {
 }
 
 void MyStepper::run(int stepdelay) {
+  //If switch is either up and down, or neither up nor down, set step pin to LOW and return
+  if (_switchUpState == _switchDownState){
+    //Change stepper state to low only if necessary
+    if (_lastState != LOW)
+    {
+      digitalWrite(_stepPin, LOW);
+      _lastState = LOW;
+    }
+    return;
+  }
+
+  
   //Get directions right
   bool dir = LOW;
   if (_switchDownState)
@@ -50,30 +62,17 @@ void MyStepper::run(int stepdelay) {
 
   //Non-blocking stepper speed control
   unsigned long now = micros();
-  if(_switchUpState || _switchDownState)
+  //If too many micros have gone by, set internal timer back to 0
+  if (_internalTimer > now)
   {
+    _internalTimer = 0;
+  }
 
-    //If too many micros have gone by, set internal timer back to 0
-    if (_internalTimer > now)
-    {
-      _internalTimer = 0;
-    }
-
-    //Change stepper state enough time has gone by
-    if (now - _internalTimer >= stepdelay)
-    {
-      digitalWrite(_stepPin, !_lastState);
-      _lastState = !_lastState;
-      _internalTimer = now;
-    }
-	} 
-  else 
+  //Change stepper state enough time has gone by
+  if (now - _internalTimer >= stepdelay)
   {
-
-    //Change stepper state to low only if necessary
-    if (_lastState != LOW)
-    {
-      digitalWrite(_stepPin, LOW);
-    }
-	}
+    digitalWrite(_stepPin, !_lastState);
+    _lastState = !_lastState;
+    _internalTimer = now;
+  } 
 }
