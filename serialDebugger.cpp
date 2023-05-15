@@ -23,7 +23,7 @@ void serialDebugger::serialInit(int baudRate){
         {
             delay(10);
         }
-        serialPrint("Serial began at baudRate:", String(baudRate));
+        serialPrint("Serial began at :\t", String(baudRate) + " bauds");
     }
 }
 

@@ -80,7 +80,8 @@ void MyStepper::run(int stepdelay) {
     _lastDir = dir;
 
     //DEBUG-------------------------------------------------------------------
-    debugger.serialPrint("STEPER ", String(_stepPin) + " CHANGED DIRECTION !");
+    debugger.serialPrint("STEPER ", String(_stepPin) + " CHANGED DIRECTION :", false);
+    debugger.serialPrint("", String(_lastDir));
     //DEBUG-------------------------------------------------------------------
   }
 
