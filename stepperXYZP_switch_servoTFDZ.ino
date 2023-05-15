@@ -17,7 +17,7 @@ const int switchAdown = 41;
 MyStepper stepperX(45, 33, 5, 2);
 MyStepper stepperY(47, 35, 6, 3);
 MyStepper stepperZ(49, 37, 7, 4);
-MyStepper stepperP(51, 39, 13, 12, true);//<------ Needs debugging 
+MyStepper stepperP(51, 39, 13, 12, true);//<------ Needs debugging ?
 MyStepper steppers[NUM_OF_STEPPERS] = {stepperX, stepperY, stepperZ, stepperP};
 
 //Servos
@@ -32,7 +32,7 @@ Servo srvZ;
 MyServo servoT(srvT, 9, 14);
 MyServo servoF(srvF, 10, 15);
 MyServo servoD(srvD, 11, 16);
-MyServo servoZ(srvZ, 12, 17);
+MyServo servoZ(srvZ, 12, 17, true);//<------ Needs debugging ?
 MyServo servos[NUM_OF_SERVOS] = {servoT, servoF, servoD, servoZ};
 
 //Gates, timers, indices...
