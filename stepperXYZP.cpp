@@ -1,12 +1,13 @@
 #include "stepperXYZP.h"
 
 //My Stepper Constructor
-MyStepper::MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin) {
+MyStepper::MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin, bool debug=false) {
   //Declare pins
   _switchUpPin = switchUpPin;
   _switchDownPin= switchDownPin;
   _dirPin = dirPin;
   _stepPin = stepPin;
+  debugger.setActive(debug);
 
   //Init internal variables
   _switchUpState = LOW;
@@ -17,12 +18,20 @@ MyStepper::MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin
   _internalReadTimer = 0;
 }
 
+
 //Init Pins
 void MyStepper::pinInit() {
   pinMode(_dirPin, OUTPUT);
   pinMode(_stepPin, OUTPUT);
   pinMode(_switchUpPin, INPUT_PULLUP);
   pinMode(_switchDownPin, INPUT_PULLUP);
+
+  //DEBUG-------------------------------------------------------------------
+  debugger.serialPrint("STEP PIN INIT:\tdirPin:\t", String(_dirPin), false);
+  debugger.serialPrint("stepPin:\t", String(_stepPin), false);
+  debugger.serialPrint("switchUpPin:\t", String(_switchUpPin), false);
+  debugger.serialPrint("switchDownPin:\t", String(_switchDownPin));
+  //DEBUG-------------------------------------------------------------------
 }
 
 void MyStepper::read(int delay_ms) {
@@ -30,6 +39,13 @@ void MyStepper::read(int delay_ms) {
   if (now - _internalReadTimer > delay_ms){
     _switchUpState = digitalRead(_switchUpPin);
     _switchDownState = digitalRead(_switchDownPin);
+
+    //DEBUG-------------------------------------------------------------------
+    debugger.serialPrint("STEP SWITCH UP ", String(_switchUpPin) + ":", false);
+    debugger.serialPrint("", String(_switchUpState));
+    debugger.serialPrint("STEP SWITCH DOWN ", String(_switchDownPin) + ":", false);
+    debugger.serialPrint("", String(_switchDownState));
+    //DEBUG-------------------------------------------------------------------
   }
 }
 
@@ -40,8 +56,12 @@ void MyStepper::run(int stepdelay) {
     if (_lastState != LOW)
     {
       digitalWrite(_stepPin, LOW);
-      _lastState = LOW;
+      _lastState = LOW;      
     }
+
+    //DEBUG-------------------------------------------------------------------
+    debugger.serialPrint("STEPER ", String(_stepPin) + " STOP");
+    //DEBUG-------------------------------------------------------------------
     return;
   }
 
@@ -58,6 +78,10 @@ void MyStepper::run(int stepdelay) {
   {
     digitalWrite(_dirPin, dir);
     _lastDir = dir;
+
+    //DEBUG-------------------------------------------------------------------
+    debugger.serialPrint("STEPER ", String(_stepPin) + " CHANGED DIRECTION !");
+    //DEBUG-------------------------------------------------------------------
   }
 
   //Non-blocking stepper speed control
@@ -74,5 +98,10 @@ void MyStepper::run(int stepdelay) {
     digitalWrite(_stepPin, !_lastState);
     _lastState = !_lastState;
     _internalTimer = now;
+    
+    //DEBUG-------------------------------------------------------------------
+    debugger.serialPrint("STEPER ", String(_stepPin) + " is changing state every:", false);
+    debugger.serialPrint("", String(stepdelay));
+    //DEBUG-------------------------------------------------------------------
   } 
 }

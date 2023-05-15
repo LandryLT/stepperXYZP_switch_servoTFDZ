@@ -3,6 +3,7 @@
 
 #include <Servo.h>
 #include <Arduino.h>
+#include "serialDebugger.h"
 
 class MyServo
 {
@@ -14,10 +15,11 @@ private:
   unsigned long _internalTimer;
   Servo _servo;
 public:
+  serialDebugger debugger = serialDebugger(false);
   void read(int delay);
   void run();
   void pinInit();
-  MyServo(Servo servo, int readPin, int servoPin);
+  MyServo(Servo servo, int readPin, int servoPin, bool debug = false);
 };
 
 #endif

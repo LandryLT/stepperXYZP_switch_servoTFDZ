@@ -15,7 +15,8 @@ class MyServo
 {
     public:
         //Constructor: needs Servo object, speed input pin and servo output pin
-        MyServo(Servo servo, int readPin, int servoPin);
+        //Optionnal debug flag
+        MyServo(Servo servo, int readPin, int servoPin, bool debug = false);
         //Initialise pins
         void pinInit();
         //Non-blocking read potentiometer for speed control
@@ -36,8 +37,9 @@ class MyStepper
 {
     public:
         /*Constructor: needs switch up and switch down input pins, as well as the stepper's direction and
-        step output pins.*/
-        MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin);
+        step output pins.
+        Optionnal debug flag*/
+        MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin, bool debug = false);
         //Initialise pins
         void pinInit();
         //Read switchs up and down
@@ -82,4 +84,24 @@ void MyStepper::run(int stepdelay) {
     }
 }
 
+```
+---
+
+## serialDebugger
+
+**serialDebugger** is a class to control debug messages on Serial port.
+```c++
+class serialDebugger
+{
+public:
+    //Constructor, declare initial state
+    serialDebugger(bool isActive);
+    //Get set active state
+    void setActive(bool isActive);
+    bool getActive();
+    //Initiate Serial.begin()
+    void init(int baudRate);
+    //Print stuff if active
+    void serialPrint(String label, String value, bool carry = true);
+};
 ```
