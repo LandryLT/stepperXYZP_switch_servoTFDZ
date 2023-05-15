@@ -23,8 +23,8 @@ MyStepper::MyStepper(int switchUpPin, int switchDownPin, int dirPin, int stepPin
 void MyStepper::pinInit() {
   pinMode(_dirPin, OUTPUT);
   pinMode(_stepPin, OUTPUT);
-  pinMode(_switchUpPin, INPUT_PULLUP);
-  pinMode(_switchDownPin, INPUT_PULLUP);
+  pinMode(_switchUpPin, INPUT);
+  pinMode(_switchDownPin, INPUT);
 
   //DEBUG-------------------------------------------------------------------
   debugger.serialPrint("STEP PIN INIT:\tdirPin:\t", String(_dirPin), false);
@@ -60,7 +60,7 @@ void MyStepper::run(int stepdelay) {
     }
 
     //DEBUG-------------------------------------------------------------------
-    debugger.serialPrint("STEPER ", String(_stepPin) + " STOP");
+    debugger.serialPrint("STEPPER ", String(_stepPin) + " STOP");
     //DEBUG-------------------------------------------------------------------
     return;
   }
@@ -80,7 +80,7 @@ void MyStepper::run(int stepdelay) {
     _lastDir = dir;
 
     //DEBUG-------------------------------------------------------------------
-    debugger.serialPrint("STEPER ", String(_stepPin) + " CHANGED DIRECTION :", false);
+    debugger.serialPrint("STEPPER ", String(_stepPin) + " CHANGED DIRECTION :", false);
     debugger.serialPrint("", String(_lastDir));
     //DEBUG-------------------------------------------------------------------
   }
@@ -101,7 +101,7 @@ void MyStepper::run(int stepdelay) {
     _internalTimer = now;
     
     //DEBUG-------------------------------------------------------------------
-    debugger.serialPrint("STEPER ", String(_stepPin) + " is changing state every:", false);
+    debugger.serialPrint("STEPPER ", String(_stepPin) + " is changing state every:", false);
     debugger.serialPrint("", String(stepdelay));
     //DEBUG-------------------------------------------------------------------
   } 
