@@ -46,7 +46,7 @@ int maxNumMotors = max(NUM_OF_STEPPERS, NUM_OF_SERVOS);
 void setup() {
   //Global debug needs to be active to open serial port
   if (globalDebug.getActive()){
-    Serial.begin(9600);
+    Serial.begin(115200);
   } else {
     //Turn all debuggers off if global debugger is not active
     for (int i = 0; i < NUM_OF_STEPPERS; i++){
