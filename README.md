@@ -99,8 +99,6 @@ public:
     //Get set active state
     void setActive(bool isActive);
     bool getActive();
-    //Initiate Serial.begin()
-    void serialInit(int baudRate);
     //Print stuff if active
     void serialPrint(String label, String value, bool carry = true);
 };

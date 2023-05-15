@@ -11,7 +11,6 @@ public:
     serialDebugger(bool isActive);
     void setActive(bool isActive);
     bool getActive();
-    void serialInit(int baudRate);
     void serialPrint(String label, String value, bool carry = true);
 };
 

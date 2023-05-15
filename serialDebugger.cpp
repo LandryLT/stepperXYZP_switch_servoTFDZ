@@ -14,19 +14,6 @@ bool serialDebugger::getActive(){
     return _active;
 }
 
-//Init serial port
-void serialDebugger::serialInit(int baudRate){
-    //Only if active and not already open
-    if (_active && !Serial){
-        Serial.begin(baudRate);
-        while (!Serial)
-        {
-            delay(10);
-        }
-        serialPrint("Serial began at :\t", String(baudRate) + " bauds");
-    }
-}
-
 //Print something
 void serialDebugger::serialPrint(String label, String value, bool carry = true){
     //Do nothing

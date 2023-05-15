@@ -44,17 +44,18 @@ int orchestratorIndex = 0;
 int maxNumMotors = max(NUM_OF_STEPPERS, NUM_OF_SERVOS); 
 
 void setup() {
-  //Initiate debugger
-  globalDebug.serialInit(9600);
-  //Turn all debuggers off if global debugger is not active
-  if (!globalDebug.getActive()){
+  //Global debug needs to be active to open serial port
+  if (globalDebug.getActive()){
+    Serial.begin(9600);
+  } else {
+    //Turn all debuggers off if global debugger is not active
     for (int i = 0; i < NUM_OF_STEPPERS; i++){
       steppers[i].debugger.setActive(false);
     }
     for (int i = 0; i < NUM_OF_SERVOS; i++){
       servos[i].debugger.setActive(false);
     }
-  }
+  } 
 
   //Stepper pins
   for (int i = 0; i < NUM_OF_STEPPERS; i++){
