@@ -2,7 +2,7 @@
 #include "servoTFDZ.h"
 
 //Activate global debugging
-serialDebugger globalDebug = serialDebugger(true);
+serialDebugger globalDebug(true);
 
 //Other Inputs
 #define MISC_INPUTS_REFRESH_MS 100
